@@ -1,0 +1,14 @@
+{
+	// Actual Compiler Stuff
+	"compilerOptions": {
+		"module": "CommonJS",
+		"target": "ES6",
+		"esModuleInterop": true,
+	},
+	"include": [
+		"src/**/*"
+	],
+	"exclude": [
+		"node_modules"
+	]
+}

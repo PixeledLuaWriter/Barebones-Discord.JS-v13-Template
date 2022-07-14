@@ -1,0 +1,30 @@
+{
+  "name": "barebones-discord.js-v13-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "discord.js": "^13.1.0",
+    "express": "*",
+    "genius-lyrics": "*",
+    "got": "*",
+    "moment": "*",
+    "moment-duration-format": "*"
+  },
+  "devDependencies": {
+    "better-erela.js-spotify": "*",
+    "erela.js": "*",
+    "erela.js-deezer": "*",
+    "erela.js-facebook": "*",
+    "lavasfy": "*",
+    "mongoose": "*",
+    "quickmongo": "*"
+  }
+}
