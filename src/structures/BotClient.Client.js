@@ -1,11 +1,16 @@
 import { Client, Collection, Intents } from "discord.js";
 import { Manager } from "erela.js";
 import mongoose from "mongoose";
+import "dotenv" // for NodeJSProcess class
+import quickmongo from "quickmongo";
+import config from "../config/config.js"
+const Spotify = import("better-erela.js-spotify").default
+import Deezer from "erela.js-deezer"
 import { Database } from "quickmongo";
 import { readdirSync } from "node:fs";
-import Logger from "../modules/helpers/Logger"
+import Logger from "../modules/helpers/Logger.js"
 
-export class Bot extends Client {
+export default class Bot extends Client {
 	constructor() {
 		super({
 			intents: [
@@ -29,31 +34,60 @@ export class Bot extends Client {
 		this.slashCommands = new Collection();
 
 		// Configuration Stuff / Miscellaneous Bullshit
-		this.config = require('../config/config');
+		this.config = config;
 		this.global_config = process.env;
-		this.logger = Logger;
+		this.logger = new Logger(this);
+		this.utils = new Utils(this)
 
 		// Snipe Collections
 		this.messageSnipes = {};
 		this.editSnipes = {};
 		this.reactionSnipes = {};
+
+		// MongoDB Database stuff
+
 	}
 	// Functions
 
-	loadBotEvents() {
-		readdirSync('../events/Client/').forEach((file) => {
-			const event = require(`../events/Client/${file}`);
-			const eventName = file.split('.')[0];
-			this.logger.eventLoaded(`Client Event -> ${eventName} Has Loaded`);
-			this.on(eventName, event.bind(null, this));
+	loadEvents() {
+		readdirSync('../events/client').forEach((file) => {
+			const event = require(`../events/client/${file}`)
+			let eventName = file.split('.')[0]
+			this.logger.("eventLoaded", `Loaded Event -> ${eventName}`)
 		});
 	}
 
-	loadLavalinkEvents() {
-		readdirSync('../events/Lavalink/').forEach((file) => {
-			const event = require(`../events/Lavalink/${file}`)
-			const eventName = file.split('.')[0]
-			this.logger.eventLoaded(`Lavalink Event -> ${eventName} Has Loaded`)
+	initMongoDB() {
+		mongoose.connect(this.global_config.mongo_uri, {
+			useNewUrlParser: true,
+			autoIndex: false,
+			poolSize: 5,
+			connectTimeoutMS: 10000,
+			family: 4,
+			useUnifiedTopology: true,
+			useFindAndModify: false
+		})
+
+		/**
+		* Setting The Promise On Mongoose Itself
+		*/
+
+		mongoose.Promise = global.Promise
+
+		/**
+		* Handling Emitted Events On Mongoose
+		**/
+
+		mongoose.on("connected", () => {
+			this.logger("eventLoaded", "[DB]: Successfully Connected To MongoDB Atlas")
+		})
+
+		mongoose.on('disconnected', () => {
+			this.logger("errorEmitted", "[DB]: Lost Connection To The Database, Please Wait While It Reconnects")
+		})
+
+		mongoose.on('err', (error) => {
+			this.logger("errorEmitted", `[DB]: An Error Has Occured -> ${error}`)
 		})
 	}
 
@@ -91,6 +125,5 @@ export class Bot extends Client {
 		console.clear()
 		this.login()
 		this.loadBotEvents()
-		this.loadLavalinkEvents()
 	}
 }

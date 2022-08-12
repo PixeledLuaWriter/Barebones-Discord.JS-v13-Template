@@ -1,7 +1,12 @@
 import chalk from "chalk";
 import moment from "moment";
 
-module.exports = class Logger {
+export default class Logger {
+  constructor(client) {
+    if (!client) {
+      throw TypeError("The Client Class Is Not Defined, Please Use It As So For ESM, \" this.logger = new Logger(this)\"")
+    }
+  }
   static log (type = "eventLoaded", content) {
     const getCurrentDate = `${moment().format('DD-MM-YY | hh:mm:ss')}`
     switch (type) {

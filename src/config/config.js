@@ -5,6 +5,7 @@
 	This also means that it is tamper protected as nothing
 	can be overwritten since the entire configuration is immutable.
 */
+
 function deepFreeze(object) {
 	const propNames = Object.getOwnPropertyNames(object);
 	for (const name of propNames) {
@@ -21,13 +22,13 @@ module.exports = deepFreeze({
 		id: "Main",
 		host: "your hosting url here",
 		port: 440,
-		identifier: "@BarebonesTemplate",
+		identifier: "@BarebonesTemplate", // My Suggestion is to use repl.it for hosting unless your doing it yourself via local server
 		password: "youshallnotpass", // default password [SET YOUR OWN OPRIONALLY]
 		retryAmount: 10,
 		retryDelay: 3000,
 		secure: true
 	},
 	prefix: ".>", // Placeholder Prefix [SET YOUR OWN OPTIONALLY]
-	ownerID: "your account id here",
+	ownerIDs: ["your discord account id here", "another one here"],
 	embedColor: "#ffefb0"
 })
