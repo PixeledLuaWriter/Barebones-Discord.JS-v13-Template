@@ -5,6 +5,10 @@ export default model('user', new Schema({
     type: String,
     required: true
   },
+  guildId: {
+    type: String,
+    required: true
+  },
   isBlacklisted: {
     type: Boolean,
     default: false

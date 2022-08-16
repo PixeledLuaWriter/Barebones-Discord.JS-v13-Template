@@ -1,6 +1,6 @@
-const { MessageEmbed } = require("discord.js");
+import { MessageEmbed } from "discord.js";
 
-module.exports = async (client, player, track, payload) => {
+export default async (client, player, track, payload) => {
 
     console.error(payload.error);
 
@@ -9,7 +9,7 @@ module.exports = async (client, player, track, payload) => {
         .setColor("RED")
         .setDescription("❌ Error while loading your song, the track has encountered an error");
     channel.send({embeds: [thing]});
-    client.logger.log(`Error when loading song! Track is error in [${player.guild}]`, "error");
+    client.logger("errorEmitted", `Error when loading song! Track is error in [${player.guild}]`);
     if (!player.voiceChannel) player.destroy();
 
 }

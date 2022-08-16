@@ -1,8 +1,8 @@
-const delay = require("delay");
-const { MessageEmbed } = require("discord.js");
-const ms = require('ms');
+import delay from "delay";
+import { MessageEmbed } from "discord.js";
+import ms from 'ms';
 
-module.exports = async (client, player) => {
+export default async (client, player) => {
 
 	const channel = client.channels.cache.get(player.textChannel);
 	const emojiwarn = client.emoji.warn;

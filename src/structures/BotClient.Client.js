@@ -1,14 +1,16 @@
-import { Client, Collection, Intents } from "discord.js";
-import { Manager } from "erela.js";
-import mongoose from "mongoose";
-import "dotenv" // for NodeJSProcess class
-import quickmongo from "quickmongo";
+const { Client, Collection, Intents } = await import("discord.js");
+const { Manager } = await import("erela.js");
+const mongoose = await import("mongoose");
+const dotenv = await import("dotenv"); // for NodeJSProcess class to use .env files
 import config from "../config/config.js"
-const Spotify = import("better-erela.js-spotify").default
+const Spotify = await import("better-erela.js-spotify").default
 import Deezer from "erela.js-deezer"
 import { Database } from "quickmongo";
 import { readdirSync } from "node:fs";
 import Logger from "../modules/helpers/Logger.js"
+import Utils from "../modules/helpers/Utils.js"
+
+dotenv.config()
 
 export default class Bot extends Client {
 	constructor() {
@@ -35,6 +37,7 @@ export default class Bot extends Client {
 
 		// Configuration Stuff / Miscellaneous Bullshit
 		this.config = config;
+		this.categories = readdirSync('../commands/');
 		this.global_config = process.env;
 		this.logger = new Logger(this);
 		this.utils = new Utils(this)
@@ -44,8 +47,6 @@ export default class Bot extends Client {
 		this.editSnipes = {};
 		this.reactionSnipes = {};
 
-		// MongoDB Database stuff
-
 	}
 	// Functions
 
@@ -53,11 +54,18 @@ export default class Bot extends Client {
 		readdirSync('../events/client').forEach((file) => {
 			const event = require(`../events/client/${file}`)
 			let eventName = file.split('.')[0]
-			this.logger.("eventLoaded", `Loaded Event -> ${eventName}`)
+			this.logger("eventLoaded", `Loaded Event -> ${eventName}`)
+			this.on(eventName, event.bind(null, this))
+		});
+		readdirSync('../events/lavalink').forEach((file) => {
+			const levent = await import(`../events/lavalink/${file}`)
+			let levent_name = file.split(".")[0]
+			this.logger("eventLoaded", `Loaded Lavalink Event -> ${levent_name}`)
+			this.manager.on(levent_name, levent.bind(null, this))
 		});
 	}
 
-	initMongoDB() {
+	async initMongoDB() {
 		mongoose.connect(this.global_config.mongo_uri, {
 			useNewUrlParser: true,
 			autoIndex: false,
@@ -88,6 +96,29 @@ export default class Bot extends Client {
 
 		mongoose.on('err', (error) => {
 			this.logger("errorEmitted", `[DB]: An Error Has Occured -> ${error}`)
+		})
+	}
+
+	async initLavalink() {
+		this.manager = new Manager({
+			nodes: this.config.nodes,
+			send(id, payload) {
+				const guild = super.guilds.cache.get(id)
+				if(guild) guild.shard.send(payload)
+			},
+			autoPlay: true,
+			plugins: [
+				new Spotify({
+					strategy: "API",
+					clientId: this.global_config.spotify_clientID,
+					clientSecret: this.global_config.spotify_secret,
+					convertUnresolved: true,
+					showPageLimit: 10,
+					playlistPageLimit: 10,
+					albumPageLimit: 10
+				}),
+				new Deezer()
+			]
 		})
 	}
 

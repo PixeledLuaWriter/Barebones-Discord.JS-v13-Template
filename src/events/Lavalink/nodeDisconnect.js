@@ -1,5 +1,5 @@
-module.exports = async (client, node, reason) => {
+export default async (client, node, reason) => {
 
-	client.logger.log(`Node "${node.options.identifier}" disconnect because ${reason}.`, "warn");
+	client.logger("internalOperations", `Node "${node.options.identifier}" disconnect because ${reason}.`);
 
 }

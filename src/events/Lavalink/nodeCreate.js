@@ -1,5 +1,5 @@
-module.exports = async (client, node) => {
+export default async (client, node) => {
 
-	client.logger.log(`Node "${node.options.identifier}" created.`, "log");
+	client.logger.log("apiResponse", `Node "${node.options.identifier}" created.`);
 
 }

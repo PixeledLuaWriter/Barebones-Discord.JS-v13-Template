@@ -11,5 +11,5 @@ touch the code
 TODO:
  - [x] Lots of stuff
  - [x] Premade User Schema With Proper Blacklist
- - [ ] Add Schemas Folder For Models
+ - [x] Add Schemas Folder For Models
  - [ ] Add A Dummy Command For The template

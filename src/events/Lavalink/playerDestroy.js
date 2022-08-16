@@ -1,5 +1,5 @@
-module.exports = async (client, player) => {
+export default async (client, player) => {
 
-	client.logger.log(`Player has been destroyed in ${player.guild}`, "log");
+	client.logger("internalOperations", `Player has been destroyed in ${player.guild}`);
 
 }

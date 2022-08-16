@@ -1,5 +1,5 @@
-module.exports = async (client, node) => {
+export default async (client, node) => {
 
-	client.logger.log(`Node "${node.options.identifier}" reconnected.`, "log");
+	client.logger("internalOperations", `Node "${node.options.identifier}" reconnected.`);
 
 }

@@ -1,18 +1,18 @@
-const { prefix } = require("../../config.json");
+import { prefix } from "../../config.json";
 
-module.exports = async (client) => {
+export default async (client) => {
 
     client.manager.init(client.user.id);
-    client.logger.log(`${client.user.username} online!`, "ready");
-    client.logger.log(`Ready on ${client.guilds.cache.size} servers, for a total of ${client.users.cache.size} users`, "ready");
+    client.logger("internalOperations", `${client.user.username} online!`);
+    client.logger("internalOperations", `Ready on ${client.guilds.cache.size} servers, for a total of ${client.users.cache.size} users`);
 
     //Game
     let statuses = {
         name: [
             "/help",
             `Prefix: ${prefix}`,
-            "digesting time",
-            "scouraging the universe for improbabilities"
+            `with ${client.users.cache.size} users`,
+            `on ${client.guilds.cache.size} servers`,
         ],
         type: [
             "WATCHING",

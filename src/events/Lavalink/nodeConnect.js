@@ -1,5 +1,5 @@
-module.exports = async (client, node) => {
+export default async (client, node) => {
 
-	client.logger.log(`Node "${node.options.identifier}" connected.`, "ready");
+	client.logger.log("internalOperations", `Node "${node.options.identifier}" connected.`);
 
 }

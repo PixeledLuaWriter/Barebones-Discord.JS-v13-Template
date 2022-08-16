@@ -1,24 +1,26 @@
-const { MessageEmbed } = require("discord.js");
-const PrefixSchema = require("../../schemas/PrefixSchema")
-const UserSchema = require("../../schemas/UserSchema")
+import { MessageEmbed } from "discord.js";
+import { findOne } from "../../schemas/PrefixSchema";
+import UserSchema, { findOne as _findOne } from "../../schemas/UserSchema";
 
-module.exports = async (client, message) => {
+export default async (client, message) => {
 
    if (message.author.bot) return;
    if (!message.guild) return;
 
    let prefix = client.prefix
-   let prefixSchema = await PrefixSchema.findOne({
+   let prefixSchema = await findOne({
      guildId: message.guildId
    })
    let UserData;
     try {
-      UserData = await UserSchema.findOne({
+      UserData = await _findOne({
         userId: message.author.id
       })
       if(!UserData) {
         UserData = new UserSchema({
-          userId: message.author.id
+          userId: message.author.id,
+          guildId: message.guild.id,
+          
         })
       }
     } catch(error) {
@@ -78,7 +80,7 @@ module.exports = async (client, message) => {
         return message.channel.send({embeds: [embed]})
     }
 
-    if (command.owner && message.author.id !== `${client.owner}`) {
+    if (command.owner && (client.config.ownerIDs.includes(message.author.id))) {
         embed.setDescription(`Only <@${client.owner}> can use this command!`);
         return message.channel.send({embeds: [embed]});
     }
@@ -104,7 +106,7 @@ module.exports = async (client, message) => {
         command.execute(message, args, client, prefix);
     } catch (error) {
         console.log(error);
-        embed.setDescription("There was an error executing that command.\nI have contacted the owner of the bot to fix it immediately.");
+        embed.setDescription("There was an error executing that command.\nI have contacted the owner(s) of the bot to fix it immediately.");
         return message.channel.send({embeds: [embed]});
     }
   }
