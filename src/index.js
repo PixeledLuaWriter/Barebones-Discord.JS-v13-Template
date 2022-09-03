@@ -1,4 +1,4 @@
-const { Client } = require("./structures/Bot.Client.js")
+const Client = require("./structures/Bot.Client.js")
 
 /** 
  * Create The Bot Instance
