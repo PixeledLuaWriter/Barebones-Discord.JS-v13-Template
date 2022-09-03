@@ -1,18 +1,18 @@
-const { Client, Collection, Intents } = await import("discord.js");
-const { Manager } = await import("erela.js");
-const mongoose = await import("mongoose");
-const dotenv = await import("dotenv"); // for NodeJSProcess class to use .env files
-import config from "../config/config.js"
-const Spotify = await import("better-erela.js-spotify").default
-import Deezer from "erela.js-deezer"
-import { Database } from "quickmongo";
-import { readdirSync } from "node:fs";
-import Logger from "../modules/helpers/Logger.js"
-import Utils from "../modules/helpers/Utils.js"
+const { Client, Collection, Intents } = require("discord.js");
+const { Manager } = require("erela.js");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv"); // for NodeJSProcess class to use .env files
+const config  = require("../config/config.js");
+const Spotify = require("better-erela.js-spotify").default
+const Deezer = require("erela.js-deezer")
+const { Database } = require("quickmongo");
+const { readdirSync } = require("node:fs");
+const Logger = require("../modules/helpers/Logger.js");
+const Utils = require("../modules/helpers/Utils.js")
 
 dotenv.config()
 
-export default class Bot extends Client {
+module.exports = class Bot extends Client {
 	constructor() {
 		super({
 			intents: [
@@ -54,13 +54,13 @@ export default class Bot extends Client {
 		readdirSync('../events/client').forEach((file) => {
 			const event = require(`../events/client/${file}`)
 			let eventName = file.split('.')[0]
-			this.logger("eventLoaded", `Loaded Event -> ${eventName}`)
+			this.logger.log("eventLoaded", `Loaded Event -> ${eventName}`)
 			this.on(eventName, event.bind(null, this))
 		});
 		readdirSync('../events/lavalink').forEach((file) => {
 			const levent = await import(`../events/lavalink/${file}`)
 			let levent_name = file.split(".")[0]
-			this.logger("eventLoaded", `Loaded Lavalink Event -> ${levent_name}`)
+			this.logger.log("eventLoaded", `Loaded Lavalink Event -> ${levent_name}`)
 			this.manager.on(levent_name, levent.bind(null, this))
 		});
 	}
@@ -87,15 +87,15 @@ export default class Bot extends Client {
 		**/
 
 		mongoose.on("connected", () => {
-			this.logger("eventLoaded", "[DB]: Successfully Connected To MongoDB Atlas")
+			this.logger.log("eventLoaded", "[DB]: Successfully Connected To MongoDB Atlas")
 		})
 
 		mongoose.on('disconnected', () => {
-			this.logger("errorEmitted", "[DB]: Lost Connection To The Database, Please Wait While It Reconnects")
+			this.logger.log("errorEmitted", "[DB]: Lost Connection To The Database, Please Wait While It Reconnects")
 		})
 
 		mongoose.on('err', (error) => {
-			this.logger("errorEmitted", `[DB]: An Error Has Occured -> ${error}`)
+			this.logger.log("errorEmitted", `[DB]: An Error Has Occured -> ${error}`)
 		})
 	}
 

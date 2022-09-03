@@ -1,8 +1,8 @@
-import { MessageEmbed } from "discord.js";
-import { findOne } from "../../schemas/PrefixSchema";
-import UserSchema, { findOne as _findOne } from "../../schemas/UserSchema";
+const { MessageEmbed } = require("discord.js");
+const { findOne } = require("../../schemas/PrefixSchema");
+const UserSchema = require("../../schemas/UserSchema");
 
-export default async (client, message) => {
+module.exports = async (client, message) => {
 
    if (message.author.bot) return;
    if (!message.guild) return;
@@ -13,7 +13,7 @@ export default async (client, message) => {
    })
    let UserData;
     try {
-      UserData = await _findOne({
+      UserData = await UserSchema.findOne({
         userId: message.author.id
       })
       if(!UserData) {
@@ -33,7 +33,7 @@ export default async (client, message) => {
     if (message.content.match(mention)) {
       const embed = new MessageEmbed()
         .setColor(client.embedColor)
-        .setDescription(`**› My prefix in this server is \`${prefix}\`**\n**› You can see my all commands type \`${prefix}\`help**`);
+        .setDescription(`**› My prefix in this server is \`${prefix}\`**\n**› You can see all of my commands via typing \`${prefix}\`help**`);
       message.channel.send({embeds: [embed]})
     };
 

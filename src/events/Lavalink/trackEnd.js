@@ -1,4 +1,4 @@
-export default async (client, player, track, playload) => {
+module.exports = async (client, player, track, playload) => {
 
     const autoplay = player.get("autoplay")
     if (autoplay === true) {

@@ -1,4 +1,4 @@
-export default async (client, message) => {
+module.exports = async (client, message) => {
     if (message.partial || (!message.embeds.length && !message.content)) return; // content is non existant or the embed is removed
 
     client.msgSnipes[message.channel.id] = {

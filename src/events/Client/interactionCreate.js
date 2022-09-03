@@ -1,6 +1,6 @@
-import { MessageEmbed, Client } from "discord.js";
+const { MessageEmbed, Client } = require("discord.js");
 
-export default async (client, interaction) => {
+module.exports = async (client, interaction) => {
 	 let prefix = await client.db.get(`prefix_${interaction.guild.id}`);
       if (prefix === null) prefix = client.prefix;
       

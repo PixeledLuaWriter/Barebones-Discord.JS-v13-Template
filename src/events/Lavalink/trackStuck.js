@@ -1,6 +1,6 @@
-import { MessageEmbed } from "discord.js";
+const { MessageEmbed } = require("discord.js");
 
-export default async (client, player, track, payload) => {
+module.exports = async (client, player, track, payload) => {
     
     const channel = client.channels.cache.get(player.textChannel);
     const thing = new MessageEmbed()

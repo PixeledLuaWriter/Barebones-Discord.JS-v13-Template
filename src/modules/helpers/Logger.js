@@ -1,10 +1,10 @@
-import chalk from "chalk";
-import moment from "moment";
+const chalk = require("chalk");
+const moment = require("moment");
 
 export default class Logger {
   constructor(client) {
     if (!client) {
-      throw TypeError("The Client Class Is Not Defined, Please Use It As So For ESM, \" this.logger = new Logger(this)\"")
+      throw TypeError("The Client Class Is Not Defined, Please Use It As So: \" this.logger = new Logger(this)\"")
     }
   }
   static log (type = "eventLoaded", content) {

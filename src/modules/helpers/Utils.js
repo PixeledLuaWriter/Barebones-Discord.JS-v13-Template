@@ -1,7 +1,7 @@
-export default class Utils {
+module.exports = class Utils {
   constructor(client) {
     if (!client) {
-      throw TypeError("The Client Class Is Not Defined, Please Use It As So For ESM: \"this.utils = new Utils(this)\"")
+      throw TypeError("The Client Class Is Not Defined, Please Use It As So: \"this.utils = new Utils(this)\"")
     }
   }
   static formatEmoji(emoji) {

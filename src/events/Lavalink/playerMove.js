@@ -1,4 +1,4 @@
-export default async (client, player, oldChannel, newChannel) => {
+module.exports = async (client, player, oldChannel, newChannel) => {
 
 	player.voiceChannel = client.channels.cache.get(newChannel);
 	

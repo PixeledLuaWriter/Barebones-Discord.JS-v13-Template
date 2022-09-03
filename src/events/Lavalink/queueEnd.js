@@ -1,11 +1,11 @@
-import delay from "delay";
-import { MessageEmbed } from "discord.js";
-import ms from 'ms';
+const delay = require("delay");
+const { MessageEmbed } = require("discord.js");
+const ms = require("ms");
 
-export default async (client, player) => {
+module.exports = async (client, player) => {
 
 	const channel = client.channels.cache.get(player.textChannel);
-	const emojiwarn = client.emoji.warn;
+	const emojiwarn = client.config.emoji.warn;
 	let thing = new MessageEmbed()
 		.setColor(client.embedColor)
 		.setDescription(`${emojiwarn} **Music queue ended**`)

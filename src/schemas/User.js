@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose"
+const { Schema, model } = require("mongoose");
 
-export default model('user', new Schema({
+module.exports = model('user', new Schema({
   userId: {
     type: String,
     required: true
@@ -23,4 +23,4 @@ export default model('user', new Schema({
       default: 1e3 // 1000 (e is basically the ^ in scientific notation)
     }
   }
-}))
+}));

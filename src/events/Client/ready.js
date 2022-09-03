@@ -1,4 +1,4 @@
-import { prefix } from "../../config.json";
+const { prefix } = require("../../config.json");
 
 export default async (client) => {
 

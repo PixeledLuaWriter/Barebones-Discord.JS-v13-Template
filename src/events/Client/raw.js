@@ -1,3 +1,3 @@
-export default async (client, data) => {
+module.exports = async (client, data) => {
   client.manager.updateVoiceState(data)
 }

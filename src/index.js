@@ -1,4 +1,13 @@
-import Client from "./core/BotClient.Client";
+const { Client } = require("./structures/Bot.Client.js")
 
-const BotClient = new Client();
-BotClient.initiate();
+/** 
+ * Create The Bot Instance
+ */
+
+const Bones = new Client()
+
+/**
+ * Start The Bot's Handmade Internalized Functions
+ */
+
+Bones.initialize()

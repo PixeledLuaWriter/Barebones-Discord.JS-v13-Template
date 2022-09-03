@@ -1,6 +1,6 @@
-import { MessageEmbed } from "discord.js";
+const { MessageEmbed } = require("discord.js");
 
-export default async (client, guild) => {
+module.exports = async (client, guild) => {
 	client.users.fetch(`${client.owner}`).then(user => {
         user.send({embeds: [
 			new MessageEmbed()

@@ -1,4 +1,4 @@
-export default async (client, reaction, user) => {
+module.exports = async (client, reaction, user) => {
     if (reaction.partial) reaction = await reaction.fetch()
 
     client.reactionSnipes[reaction.message.channel.id] = {

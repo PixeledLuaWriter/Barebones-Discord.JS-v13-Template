@@ -6,6 +6,13 @@
 	can be overwritten since the entire configuration is immutable.
 */
 
+/**
+ * @name Deepfreeze
+ * @description Freezes A Given Object Recursively, Essentially Freezing All Properties And Anything Else Inside The Object
+ * @param {Object} object 
+ * @returns {object}
+ */
+
 function deepFreeze(object) {
 	const propNames = Object.getOwnPropertyNames(object);
 	for (const name of propNames) {
@@ -28,7 +35,34 @@ module.exports = deepFreeze({
 		retryDelay: 3000,
 		secure: true
 	},
+	emojis: {
+		mute: "🔇",
+		volumelow: "🔈",
+		volumemiddle: "🔉",
+		volumehigh: "🔊",
+		stop: "⏹️",
+		skip: "⏭️",
+		shuffle: "🔀",
+		rewind: "⏪",
+		resume: "▶️",
+		remove: "⏏️",
+		queue: "🎶",
+		playlist: "🎶",
+		play: "▶️",
+		pause: "⏸️",
+		loop: "🔁",
+		forward: "⏩",
+		filter: "🎛️",
+		autoplay: "🎵",
+		addsong: "🎵",
+		music: "🎵",
+		warn: "⚠️",
+		join: "📥",
+		leave: "📤",
+		about: "🔎",
+		jump: "⏭️"
+	},
 	prefix: ".>", // Placeholder Prefix [SET YOUR OWN OPTIONALLY]
-	ownerIDs: ["your discord account id here", "another one here"],
+	ownerID: "Your Discord Client ID Here",
 	embedColor: "#ffefb0"
 })
